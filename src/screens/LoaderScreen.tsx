@@ -1,5 +1,13 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import {Animated, Easing, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Animated,
+  Easing,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {LOADER_ICON} from '../assets/trailImages';
@@ -95,22 +103,26 @@ export function LoaderScreen({onFinish}: Props) {
     <LinearGradient
       colors={[Colors.loaderBgStart, Colors.loaderBgEnd]}
       style={styles.LoaderScreenContainer}>
-      <Image
-        source={LOADER_ICON}
-        style={styles.LoaderScreenIcon}
-        resizeMode="cover"
-      />
-      <View style={styles.LoaderScreenTextBlock}>
-        <Text style={styles.LoaderScreenTitle}>Preparing the Trail</Text>
-        <View style={styles.LoaderScreenTitleGap} />
-        <Text style={styles.LoaderScreenSubtitle}>
-          Loading mountain trails, scenic views, and travel notes for your
-          next European escape.
-        </Text>
-      </View>
-      <View style={styles.LoaderScreenSpinner}>
-        <Spinner12 />
-      </View>
+      <ScrollView
+        contentContainerStyle={styles.LoaderScreenScroll}
+        showsVerticalScrollIndicator={false}>
+        <Image
+          source={LOADER_ICON}
+          style={styles.LoaderScreenIcon}
+          resizeMode="cover"
+        />
+        <View style={styles.LoaderScreenTextBlock}>
+          <Text style={styles.LoaderScreenTitle}>Preparing the Trail</Text>
+          <View style={styles.LoaderScreenTitleGap} />
+          <Text style={styles.LoaderScreenSubtitle}>
+            Loading mountain trails, scenic views, and travel notes for your
+            next European escape.
+          </Text>
+        </View>
+        <View style={styles.LoaderScreenSpinner}>
+          <Spinner12 />
+        </View>
+      </ScrollView>
     </LinearGradient>
   );
 }
@@ -119,10 +131,12 @@ const styles = StyleSheet.create({
   LoaderScreenContainer: {
     flex: 1,
   },
+  LoaderScreenScroll: {
+    paddingTop: 268,
+    paddingBottom: 50,
+    alignItems: 'center',
+  },
   LoaderScreenIcon: {
-    position: 'absolute',
-    top: 268,
-    alignSelf: 'center',
     width: 180,
     height: 180,
     borderRadius: 50,
@@ -134,15 +148,11 @@ const styles = StyleSheet.create({
     shadowRadius: 18,
     elevation: 12,
   },
-
   LoaderScreenTextBlock: {
-    position: 'absolute',
-    top: 513,
+    marginTop: 65,
     width: 283,
-    alignSelf: 'center',
     alignItems: 'center',
   },
-
   LoaderScreenTitle: {
     color: '#d2d2d2',
     fontSize: 16,
@@ -163,8 +173,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   LoaderScreenSpinner: {
-    position: 'absolute',
-    top: 696,
-    alignSelf: 'center',
+    marginTop: 87,
   },
 });
