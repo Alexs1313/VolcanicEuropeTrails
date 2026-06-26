@@ -1,5 +1,5 @@
 export const Colors = {
-  appBg: '#3f070a',
+  appBg: 'rgba(16, 1, 1, 1)',
   loaderBgStart: '#260002',
   loaderBgEnd: '#680809',
   onboardingBg: '#350003',

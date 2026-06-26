@@ -1,4 +1,4 @@
-package com.volcaniceuropetrails
+package com.volcaniceurope.explorer
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

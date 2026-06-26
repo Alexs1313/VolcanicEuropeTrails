@@ -1,4 +1,4 @@
-package com.volcaniceuropetrails
+package com.volcaniceurope.explorer
 
 import android.app.Application
 import com.facebook.react.PackageList
