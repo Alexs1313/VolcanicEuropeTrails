@@ -33,7 +33,7 @@ export function MapScreen() {
   return (
     <View style={styles.MapScreenContainer}>
       <View style={styles.MapScreenHeader}>
-        <Text style={styles.MapScreenTitle}>Interactive Map</Text>
+        <Text style={styles.MapScreenTitle}>Map</Text>
       </View>
 
       <View style={styles.MapScreenMapWrap}>
