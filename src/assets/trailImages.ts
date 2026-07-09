@@ -6,7 +6,7 @@ export const PLACE_IMAGES: Record<string, any> = {
   p5: require('./europe-trails-teide.png'),
   p6: require('./europe-trails-santorini-caldera.png'),
   p7: require('./europe-trails-nea-kameni.png'),
-  p8: require('./europe-trails-nisyros-volcano.png'),
+  p8: require('./europe-trails-nisyros.png'),
   p9: require('./europe-trails-timanfaya-national-park.png'),
   p10: require('./europe-trails-furnas-valley.png'),
   p11: require('./europe-trails-matterhorn.png'),
@@ -23,14 +23,14 @@ export const PLACE_IMAGES: Record<string, any> = {
 
 export const NOTE_IMAGES: Record<string, any> = {
   n1: require('./europe-trails-note-01-reading-a-volcanic-landscape.png'),
-  n2: require('./europe-trails-note-02-why-volcano-routes-feel-different.png'),
+  n2: require('./europe-trails-note-02-why-routes-feel-different.png'),
   n3: require('./europe-trails-note-03-crater-views-and-sunset-moments.png'),
-  n4: require('./europe-trails-note-04-mountains-volcanoes-and-coastal-views.png'),
+  n4: require('./europe-trails-note-04-mountains-and-coastal-views.png'),
   n5: require('./europe-trails-note-05-planning-a-better-mountain-route.png'),
   n6: require('./europe-trails-note-06-walking-through-lava-fields.png'),
-  n7: require('./europe-trails-note-07-the-quiet-side-of-volcano-travel.png'),
+  n7: require('./europe-trails-note-07-the-quiet-side-of-travel.png'),
   n8: require('./europe-trails-note-08-how-to-choose-a-viewpoint.png'),
-  n9: require('./europe-trails-note-09-island-volcano-routes.png'),
+  n9: require('./europe-trails-note-09-island-routes.png'),
   n10: require('./europe-trails-note-10-route-mood-fire-stone-and-sky.png'),
 };
 
