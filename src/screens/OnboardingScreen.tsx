@@ -10,6 +10,7 @@ import {
 
 import {ONBOARDING_IMAGES} from '../assets/trailImages';
 import {Storage} from '../storage/storage';
+import {AnimatedScreen} from '../components/AnimatedScreen';
 import {Colors} from '../theme/colors';
 
 const IMAGE_LAYOUTS = [
@@ -89,31 +90,35 @@ export function OnboardingScreen({onFinish}: Props) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.OnboardingScreenImageWrap}>
-        <Image
-          source={ONBOARDING_IMAGES[page]}
-          style={{width: layout.width, height: layout.height}}
-          resizeMode="contain"
-        />
-      </View>
-
-      <View style={styles.OnboardingScreenCardWrap}>
-        <View style={styles.OnboardingScreenCard}>
-          <Text style={styles.OnboardingScreenCardTitle}>{current.title}</Text>
-          <Text style={styles.OnboardingScreenCardSubtitle}>
-            {current.subtitle}
-          </Text>
+      <AnimatedScreen key={page} distance={24}>
+        <View style={styles.OnboardingScreenImageWrap}>
+          <Image
+            source={ONBOARDING_IMAGES[page]}
+            style={{width: layout.width, height: layout.height}}
+            resizeMode="contain"
+          />
         </View>
-      </View>
 
-      <View style={styles.OnboardingScreenBtnWrap}>
-        <TouchableOpacity
-          style={styles.OnboardingScreenBtn}
-          onPress={next}
-          activeOpacity={0.85}>
-          <Text style={styles.OnboardingScreenBtnText}>{current.button}</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.OnboardingScreenCardWrap}>
+          <View style={styles.OnboardingScreenCard}>
+            <Text style={styles.OnboardingScreenCardTitle}>
+              {current.title}
+            </Text>
+            <Text style={styles.OnboardingScreenCardSubtitle}>
+              {current.subtitle}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.OnboardingScreenBtnWrap}>
+          <TouchableOpacity
+            style={styles.OnboardingScreenBtn}
+            onPress={next}
+            activeOpacity={0.85}>
+            <Text style={styles.OnboardingScreenBtnText}>{current.button}</Text>
+          </TouchableOpacity>
+        </View>
+      </AnimatedScreen>
     </ScrollView>
   );
 }

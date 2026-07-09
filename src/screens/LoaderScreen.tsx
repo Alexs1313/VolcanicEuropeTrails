@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LOADER_ICON} from '../assets/trailImages';
 import {Storage} from '../storage/storage';
 
+import {AnimatedScreen} from '../components/AnimatedScreen';
 import {Colors} from '../theme/colors';
 
 interface Props {
@@ -92,26 +93,28 @@ export function LoaderScreen({onFinish}: Props) {
   }, [onFinish]);
 
   return (
-    <LinearGradient
-      colors={[Colors.loaderBgStart, Colors.loaderBgEnd]}
-      style={styles.LoaderScreenContainer}>
-      <Image
-        source={LOADER_ICON}
-        style={styles.LoaderScreenIcon}
-        resizeMode="cover"
-      />
-      <View style={styles.LoaderScreenTextBlock}>
-        <Text style={styles.LoaderScreenTitle}>Preparing the Trail</Text>
-        <View style={styles.LoaderScreenTitleGap} />
-        <Text style={styles.LoaderScreenSubtitle}>
-          Loading mountain trails, scenic views, and travel notes for your
-          next European escape.
-        </Text>
-      </View>
-      <View style={styles.LoaderScreenSpinner}>
-        <Spinner12 />
-      </View>
-    </LinearGradient>
+    <AnimatedScreen style={styles.LoaderScreenContainer}>
+      <LinearGradient
+        colors={[Colors.loaderBgStart, Colors.loaderBgEnd]}
+        style={StyleSheet.absoluteFillObject}>
+        <Image
+          source={LOADER_ICON}
+          style={styles.LoaderScreenIcon}
+          resizeMode="cover"
+        />
+        <View style={styles.LoaderScreenTextBlock}>
+          <Text style={styles.LoaderScreenTitle}>Preparing the Trail</Text>
+          <View style={styles.LoaderScreenTitleGap} />
+          <Text style={styles.LoaderScreenSubtitle}>
+            Loading mountain trails, scenic views, and travel notes for your
+            next European escape.
+          </Text>
+        </View>
+        <View style={styles.LoaderScreenSpinner}>
+          <Spinner12 />
+        </View>
+      </LinearGradient>
+    </AnimatedScreen>
   );
 }
 
@@ -119,6 +122,7 @@ const styles = StyleSheet.create({
   LoaderScreenContainer: {
     flex: 1,
   },
+
   LoaderScreenIcon: {
     position: 'absolute',
     top: 268,

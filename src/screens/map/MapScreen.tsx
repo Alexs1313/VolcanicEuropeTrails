@@ -4,9 +4,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker} from 'react-native-maps';
 
 import {MAP_PIN} from '../../assets/trailImages';
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {PLACES} from '../../data/places';
 import {useAppNavigation} from '../../navigation/NavigationContext';
 import {Colors} from '../../theme/colors';
+
 import type {Place} from '../../types';
 
 const INITIAL_REGION = {
@@ -21,9 +23,9 @@ export function MapScreen() {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
   return (
-    <View style={styles.MapScreenContainer}>
+    <AnimatedScreen style={styles.MapScreenContainer}>
       <View style={styles.MapScreenHeader}>
-        <Text style={styles.MapScreenTitle}>Interactive Map</Text>
+        <Text style={styles.MapScreenTitle}>Map</Text>
       </View>
 
       <View style={styles.MapScreenMapWrap}>
@@ -48,7 +50,11 @@ export function MapScreen() {
         </MapView>
 
         {selectedPlace !== null && (
-          <View style={styles.MapScreenCardWrap} pointerEvents="box-none">
+          <AnimatedScreen
+            key={selectedPlace.id}
+            style={styles.MapScreenCardWrap}
+            distance={20}
+            pointerEvents="box-none">
             <View style={styles.MapScreenCard}>
               <View style={styles.MapScreenCardImageWrap}>
                 <Image
@@ -85,10 +91,10 @@ export function MapScreen() {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </AnimatedScreen>
         )}
       </View>
-    </View>
+    </AnimatedScreen>
   );
 }
 
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 14,
   },
+
   MapScreenTitle: {
     color: Colors.textPrimary,
     fontSize: 24,

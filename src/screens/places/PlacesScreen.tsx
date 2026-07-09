@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {PlaceCard} from '../../components/PlaceCard';
 import {PLACES} from '../../data/places';
 import {useAppNavigation} from '../../navigation/NavigationContext';
@@ -49,7 +50,7 @@ export function PlacesScreen() {
   const filtered = PLACES.filter(p => p.category === activeCategory);
 
   return (
-    <View style={styles.PlacesScreenContainer}>
+    <AnimatedScreen style={styles.PlacesScreenContainer}>
       <ScrollView
         style={styles.PlacesScreenScroll}
         contentContainerStyle={styles.PlacesScreenScrollContent}
@@ -98,7 +99,7 @@ export function PlacesScreen() {
           ))}
         </View>
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 

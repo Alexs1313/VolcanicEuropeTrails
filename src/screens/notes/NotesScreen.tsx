@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {NoteCard} from '../../components/NoteCard';
 import {TRAVEL_NOTES} from '../../data/notes';
 import {useAppNavigation} from '../../navigation/NavigationContext';
@@ -10,7 +11,7 @@ export function NotesScreen() {
   const {openNoteDetail} = useAppNavigation();
 
   return (
-    <View style={styles.NotesScreenContainer}>
+    <AnimatedScreen style={styles.NotesScreenContainer}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.NotesScreenContent}>
@@ -27,7 +28,7 @@ export function NotesScreen() {
           ))}
         </View>
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 

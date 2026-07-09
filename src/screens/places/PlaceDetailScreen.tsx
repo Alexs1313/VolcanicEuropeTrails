@@ -11,8 +11,11 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 import {ICON_SAVE, ICON_SAVED, ICON_SHARE} from '../../assets/trailImages';
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {useAppNavigation} from '../../navigation/NavigationContext';
+
 import {Storage} from '../../storage/storage';
+
 import {Colors} from '../../theme/colors';
 
 export function PlaceDetailScreen() {
@@ -50,7 +53,7 @@ export function PlaceDetailScreen() {
   };
 
   return (
-    <View style={styles.PlaceDetailScreenContainer}>
+    <AnimatedScreen style={styles.PlaceDetailScreenContainer}>
       <ScrollView
         bounces={false}
         style={styles.PlaceDetailScreenScroll}
@@ -63,8 +66,13 @@ export function PlaceDetailScreen() {
             <Text style={styles.PlaceDetailScreenCircleBtnText}>←</Text>
           </TouchableOpacity>
           <View style={styles.PlaceDetailScreenHeaderRight}>
-            <TouchableOpacity style={styles.PlaceDetailScreenCircleBtn} onPress={handleShare}>
-              <Image source={ICON_SHARE} style={styles.PlaceDetailScreenBtnIcon} />
+            <TouchableOpacity
+              style={styles.PlaceDetailScreenCircleBtn}
+              onPress={handleShare}>
+              <Image
+                source={ICON_SHARE}
+                style={styles.PlaceDetailScreenBtnIcon}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.PlaceDetailScreenCircleBtn}
@@ -129,7 +137,7 @@ export function PlaceDetailScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 

@@ -11,6 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import {SAVED_EMPTY_IMAGE} from '../../assets/trailImages';
 
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {PlaceCard} from '../../components/PlaceCard';
 import {PLACES} from '../../data/places';
 import {useAppNavigation} from '../../navigation/NavigationContext';
@@ -29,7 +30,7 @@ export function SavedScreen() {
   const savedPlaces = PLACES.filter(p => savedIds.includes(p.id));
 
   return (
-    <View style={styles.SavedScreenContainer}>
+    <AnimatedScreen style={styles.SavedScreenContainer}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.SavedScreenContent}>
@@ -79,7 +80,7 @@ export function SavedScreen() {
           </View>
         )}
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 

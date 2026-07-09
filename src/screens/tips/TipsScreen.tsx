@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {TipCard} from '../../components/TipCard';
 import {SAFETY_TIPS} from '../../data/tips';
 
@@ -8,7 +9,7 @@ import {Colors} from '../../theme/colors';
 
 export function TipsScreen() {
   return (
-    <View style={styles.TipsScreenContainer}>
+    <AnimatedScreen style={styles.TipsScreenContainer}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.TipsScreenContent}>
@@ -21,7 +22,7 @@ export function TipsScreen() {
           ))}
         </View>
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 

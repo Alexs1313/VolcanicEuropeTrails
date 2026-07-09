@@ -11,6 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 import {ICON_SHARE} from '../../assets/trailImages';
+import {AnimatedScreen} from '../../components/AnimatedScreen';
 import {useAppNavigation} from '../../navigation/NavigationContext';
 import {Colors} from '../../theme/colors';
 
@@ -31,7 +32,7 @@ export function NoteDetailScreen() {
   };
 
   return (
-    <View style={styles.NoteDetailScreenContainer}>
+    <AnimatedScreen style={styles.NoteDetailScreenContainer}>
       <ScrollView
         bounces={false}
         style={styles.NoteDetailScreenScroll}
@@ -68,7 +69,7 @@ export function NoteDetailScreen() {
           <Text style={styles.NoteDetailScreenBody}>{note.fullText}</Text>
         </View>
       </ScrollView>
-    </View>
+    </AnimatedScreen>
   );
 }
 
