@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Animated,
   Image,
   ScrollView,
   StyleSheet,
@@ -11,8 +12,10 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import {SAVED_EMPTY_IMAGE} from '../../assets/trailImages';
 
+import {FadeSlideIn} from '../../components/FadeSlideIn';
 import {PlaceCard} from '../../components/PlaceCard';
 import {PLACES} from '../../data/places';
+import {usePressScale} from '../../hooks/usePressScale';
 import {useAppNavigation} from '../../navigation/NavigationContext';
 import {Storage} from '../../storage/storage';
 
@@ -21,6 +24,7 @@ import {Colors} from '../../theme/colors';
 export function SavedScreen() {
   const {openPlaceDetail, overlay, selectTab} = useAppNavigation();
   const [savedIds, setSavedIds] = useState<string[]>([]);
+  const {scale, onPressIn, onPressOut} = usePressScale(0.96);
 
   useEffect(() => {
     Storage.getSavedPlaceIds().then(setSavedIds);
@@ -37,7 +41,7 @@ export function SavedScreen() {
         <View style={styles.SavedScreenDivider} />
 
         {savedPlaces.length === 0 ? (
-          <View style={styles.SavedScreenEmpty}>
+          <FadeSlideIn style={styles.SavedScreenEmpty} duration={420}>
             <Image
               source={SAVED_EMPTY_IMAGE}
               style={styles.SavedScreenEmptyImage}
@@ -50,31 +54,36 @@ export function SavedScreen() {
             </Text>
             <TouchableOpacity
               onPress={() => selectTab('PlacesTab')}
+              onPressIn={onPressIn}
+              onPressOut={onPressOut}
               activeOpacity={0.85}>
-              <LinearGradient
-                colors={['#930000', '#EA0201', '#FA3502', '#FB8300', '#FDC301']}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={styles.SavedScreenExploreBtn}>
-                <Text style={styles.SavedScreenExploreBtnText}>
-                  Explore Places
-                </Text>
-              </LinearGradient>
+              <Animated.View style={{transform: [{scale}]}}>
+                <LinearGradient
+                  colors={['#930000', '#EA0201', '#FA3502', '#FB8300', '#FDC301']}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}}
+                  style={styles.SavedScreenExploreBtn}>
+                  <Text style={styles.SavedScreenExploreBtnText}>
+                    Explore Places
+                  </Text>
+                </LinearGradient>
+              </Animated.View>
             </TouchableOpacity>
-          </View>
+          </FadeSlideIn>
         ) : (
           <View style={styles.SavedScreenCards}>
-            {savedPlaces.map(place => (
-              <PlaceCard
-                key={place.id}
-                place={place}
-                isSaved={true}
-                onPress={() => openPlaceDetail(place)}
-                onToggleSave={async () => {
-                  await Storage.removePlaceId(place.id);
-                  setSavedIds(prev => prev.filter(i => i !== place.id));
-                }}
-              />
+            {savedPlaces.map((place, index) => (
+              <FadeSlideIn key={place.id} delay={index * 60} duration={340}>
+                <PlaceCard
+                  place={place}
+                  isSaved={true}
+                  onPress={() => openPlaceDetail(place)}
+                  onToggleSave={async () => {
+                    await Storage.removePlaceId(place.id);
+                    setSavedIds(prev => prev.filter(i => i !== place.id));
+                  }}
+                />
+              </FadeSlideIn>
             ))}
           </View>
         )}

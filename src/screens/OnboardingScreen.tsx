@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Animated,
   Image,
   ScrollView,
   StyleSheet,
@@ -9,6 +10,8 @@ import {
 } from 'react-native';
 
 import {ONBOARDING_IMAGES} from '../assets/trailImages';
+import {FadeSlideIn} from '../components/FadeSlideIn';
+import {usePressScale} from '../hooks/usePressScale';
 import {Storage} from '../storage/storage';
 import {Colors} from '../theme/colors';
 
@@ -61,6 +64,8 @@ export function OnboardingScreen({onFinish}: Props) {
   const [page, setPage] = useState(0);
   const current = PAGES[page];
   const layout = IMAGE_LAYOUTS[page] ?? IMAGE_LAYOUTS[0];
+  const skipScale = usePressScale(0.92);
+  const nextScale = usePressScale(0.96);
 
   const complete = async () => {
     await Storage.setOnboardingDone();
@@ -82,38 +87,66 @@ export function OnboardingScreen({onFinish}: Props) {
       showsVerticalScrollIndicator={false}>
       <View style={styles.OnboardingScreenSkipRow}>
         <TouchableOpacity
-          style={styles.OnboardingScreenSkipBtn}
-          onPress={complete}>
-          <Text style={styles.OnboardingScreenSkipText}>Skip</Text>
-          <Text style={styles.OnboardingScreenSkipArrow}> ›</Text>
+          onPress={complete}
+          onPressIn={skipScale.onPressIn}
+          onPressOut={skipScale.onPressOut}>
+          <Animated.View
+            style={[
+              styles.OnboardingScreenSkipBtn,
+              {transform: [{scale: skipScale.scale}]},
+            ]}>
+            <Text style={styles.OnboardingScreenSkipText}>Skip</Text>
+            <Text style={styles.OnboardingScreenSkipArrow}> ›</Text>
+          </Animated.View>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.OnboardingScreenImageWrap}>
+      <FadeSlideIn
+        key={`image-${page}`}
+        style={styles.OnboardingScreenImageWrap}
+        duration={420}
+        distance={20}>
         <Image
           source={ONBOARDING_IMAGES[page]}
           style={{width: layout.width, height: layout.height}}
           resizeMode="contain"
         />
-      </View>
+      </FadeSlideIn>
 
-      <View style={styles.OnboardingScreenCardWrap}>
+      <FadeSlideIn
+        key={`card-${page}`}
+        style={styles.OnboardingScreenCardWrap}
+        duration={420}
+        delay={80}
+        distance={20}>
         <View style={styles.OnboardingScreenCard}>
           <Text style={styles.OnboardingScreenCardTitle}>{current.title}</Text>
           <Text style={styles.OnboardingScreenCardSubtitle}>
             {current.subtitle}
           </Text>
         </View>
-      </View>
+      </FadeSlideIn>
 
-      <View style={styles.OnboardingScreenBtnWrap}>
+      <FadeSlideIn
+        key={`btn-${page}`}
+        style={styles.OnboardingScreenBtnWrap}
+        duration={420}
+        delay={160}
+        distance={20}>
         <TouchableOpacity
-          style={styles.OnboardingScreenBtn}
           onPress={next}
+          onPressIn={nextScale.onPressIn}
+          onPressOut={nextScale.onPressOut}
           activeOpacity={0.85}>
-          <Text style={styles.OnboardingScreenBtnText}>{current.button}</Text>
+          <Animated.View
+            style={[
+              styles.OnboardingScreenBtn,
+              {transform: [{scale: nextScale.scale}]},
+            ]}>
+            <Text style={styles.OnboardingScreenBtnText}>{current.button}</Text>
+          </Animated.View>
         </TouchableOpacity>
-      </View>
+      </FadeSlideIn>
     </ScrollView>
   );
 }

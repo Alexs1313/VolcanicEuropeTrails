@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Animated,
   Image,
   Share,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 
 import {ICON_SHARE} from '../assets/trailImages';
+import {usePressScale} from '../hooks/usePressScale';
 import {Colors} from '../theme/colors';
 import type {SafetyTip} from '../types';
 
@@ -17,6 +19,8 @@ interface Props {
 }
 
 export function TipCard({tip}: Props) {
+  const {scale, onPressIn, onPressOut} = usePressScale(0.85);
+
   const handleShare = () => {
     Share.share({
       title: tip.title,
@@ -32,9 +36,13 @@ export function TipCard({tip}: Props) {
         </Text>
         <TouchableOpacity
           onPress={handleShare}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
           activeOpacity={0.7}
           hitSlop={{top: 8, right: 8, bottom: 8, left: 8}}>
-          <Image source={ICON_SHARE} style={styles.TipCardShareIcon} />
+          <Animated.View style={{transform: [{scale}]}}>
+            <Image source={ICON_SHARE} style={styles.TipCardShareIcon} />
+          </Animated.View>
         </TouchableOpacity>
       </View>
 

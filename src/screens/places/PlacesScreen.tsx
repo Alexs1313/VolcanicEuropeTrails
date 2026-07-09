@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 
+import {FadeSlideIn} from '../../components/FadeSlideIn';
 import {PlaceCard} from '../../components/PlaceCard';
 import {PLACES} from '../../data/places';
 import {useAppNavigation} from '../../navigation/NavigationContext';
@@ -87,14 +88,18 @@ export function PlacesScreen() {
         </ScrollView>
 
         <View style={styles.PlacesScreenCards}>
-          {filtered.map(place => (
-            <PlaceCard
-              key={place.id}
-              place={place}
-              isSaved={savedIds.includes(place.id)}
-              onPress={() => openPlaceDetail(place)}
-              onToggleSave={() => toggleSave(place.id)}
-            />
+          {filtered.map((place, index) => (
+            <FadeSlideIn
+              key={`${activeCategory}-${place.id}`}
+              delay={index * 60}
+              duration={340}>
+              <PlaceCard
+                place={place}
+                isSaved={savedIds.includes(place.id)}
+                onPress={() => openPlaceDetail(place)}
+                onToggleSave={() => toggleSave(place.id)}
+              />
+            </FadeSlideIn>
           ))}
         </View>
       </ScrollView>

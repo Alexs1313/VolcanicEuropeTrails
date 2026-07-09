@@ -1,7 +1,15 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {usePressScale} from '../hooks/usePressScale';
 import {Colors} from '../theme/colors';
 import type {TravelNote} from '../types';
 
@@ -11,6 +19,8 @@ interface Props {
 }
 
 export function NoteCard({note, onOpen}: Props) {
+  const {scale, onPressIn, onPressOut} = usePressScale(0.94);
+
   return (
     <View style={styles.NoteCardContainer}>
       <View style={styles.NoteCardImageWrap}>
@@ -34,10 +44,14 @@ export function NoteCard({note, onOpen}: Props) {
           {note.shortText}
         </Text>
         <TouchableOpacity
-          style={styles.NoteCardOpenBtn}
           onPress={onOpen}
+          onPressIn={onPressIn}
+          onPressOut={onPressOut}
           activeOpacity={0.8}>
-          <Text style={styles.NoteCardOpenBtnText}>Open</Text>
+          <Animated.View
+            style={[styles.NoteCardOpenBtn, {transform: [{scale}]}]}>
+            <Text style={styles.NoteCardOpenBtnText}>Open</Text>
+          </Animated.View>
         </TouchableOpacity>
       </View>
     </View>

@@ -1,18 +1,18 @@
 workflows:
   react-native-ios:
-    name: React Native iOS
+    name: Volc Europe Trails
     max_build_duration: 120
     instance_type: mac_mini_m1
     environment:
       groups:
         - app_store_credentials
       vars:
-        XCODE_WORKSPACE: 'Skate.xcworkspace' # <----
-        XCODE_SCHEME: 'Skate' # <----
-        BUNDLE_ID: 'com.Books.ride.skating' # <----
-        APP_STORE_APP_ID: 6771540404 # <----
-        APP_STORE_CONNECT_KEY_ID: '5PWL9YLY7B' # <----
-        APP_STORE_CONNECT_ISSUER_ID: 'f8a24c82-333a-4d17-b5b4-7d4acba131b7' # <----
+        XCODE_WORKSPACE: 'VolcanicEuropeTrails.xcworkspace' # <----
+        XCODE_SCHEME: 'VolcanicEuropeTrails' # <----
+        BUNDLE_ID: 'com.mncxnxcjn.volciceuropetrails' # <----
+        APP_STORE_APP_ID: 6789160971 # <----
+        APP_STORE_CONNECT_KEY_ID: '2VDC89KC82' # <----
+        APP_STORE_CONNECT_ISSUER_ID: '1ac53cbc-06d6-4f17-b514-606830504b84' # <----
         node: latest
         xcode: latest
         cocoapods: default

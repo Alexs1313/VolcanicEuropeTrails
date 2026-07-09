@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
+  Animated,
   BackHandler,
   Platform,
   StyleSheet,
@@ -20,6 +21,8 @@ import {NoteDetailScreen} from '../screens/notes/NoteDetailScreen';
 import {TipsScreen} from '../screens/tips/TipsScreen';
 
 //  context and types
+import {FadeSlideIn} from '../components/FadeSlideIn';
+import {usePressScale} from '../hooks/usePressScale';
 import {Colors} from '../theme/colors';
 import {useAppNavigation} from './NavigationContext';
 import type {AppTab} from './types';
@@ -48,6 +51,49 @@ function TabContent() {
     default:
       return <PlacesScreen />;
   }
+}
+
+function TabBarButton({
+  tab,
+  isActive,
+  onPress,
+}: {
+  tab: {name: AppTab; label: string; icon: string};
+  isActive: boolean;
+  onPress: () => void;
+}) {
+  const {scale, onPressIn, onPressOut} = usePressScale(0.9);
+  const activeScale = useRef(new Animated.Value(isActive ? 1.12 : 1)).current;
+
+  useEffect(() => {
+    Animated.spring(activeScale, {
+      toValue: isActive ? 1.12 : 1,
+      useNativeDriver: true,
+      speed: 30,
+      bounciness: 8,
+    }).start();
+  }, [isActive, activeScale]);
+
+  return (
+    <TouchableOpacity
+      style={styles.MainShellTab}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      activeOpacity={0.7}>
+      <Animated.View
+        style={{transform: [{scale: Animated.multiply(scale, activeScale)}]}}>
+        <Text style={styles.MainShellTabIcon}>{tab.icon}</Text>
+      </Animated.View>
+      <Text
+        style={[
+          styles.MainShellTabLabel,
+          {color: isActive ? Colors.tabActive : Colors.tabInactive},
+        ]}>
+        {tab.label}
+      </Text>
+    </TouchableOpacity>
+  );
 }
 
 function OverlayContent() {
@@ -82,35 +128,32 @@ function MainShell() {
 
   return (
     <View style={styles.MainShellRoot}>
-      <View style={styles.MainShellContent}>
+      <FadeSlideIn
+        key={activeTab}
+        style={styles.MainShellContent}
+        duration={260}
+        distance={12}>
         <TabContent />
-      </View>
+      </FadeSlideIn>
       {hasOverlay && (
-        <View style={styles.MainShellOverlay}>
+        <FadeSlideIn
+          key={overlay.type}
+          style={styles.MainShellOverlay}
+          duration={300}
+          distance={28}>
           <OverlayContent />
-        </View>
+        </FadeSlideIn>
       )}
       {!hasOverlay && (
         <View style={styles.MainShellTabBar}>
-          {TABS.map(tab => {
-            const isActive = tab.name === activeTab;
-            return (
-              <TouchableOpacity
-                key={tab.name}
-                style={styles.MainShellTab}
-                onPress={() => selectTab(tab.name)}
-                activeOpacity={0.7}>
-                <Text style={styles.MainShellTabIcon}>{tab.icon}</Text>
-                <Text
-                  style={[
-                    styles.MainShellTabLabel,
-                    {color: isActive ? Colors.tabActive : Colors.tabInactive},
-                  ]}>
-                  {tab.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+          {TABS.map(tab => (
+            <TabBarButton
+              key={tab.name}
+              tab={tab}
+              isActive={tab.name === activeTab}
+              onPress={() => selectTab(tab.name)}
+            />
+          ))}
         </View>
       )}
     </View>

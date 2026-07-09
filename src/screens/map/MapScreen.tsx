@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker} from 'react-native-maps';
 
 import {MAP_PIN} from '../../assets/trailImages';
+import {FadeSlideIn} from '../../components/FadeSlideIn';
 import {PLACES} from '../../data/places';
+import {usePressScale} from '../../hooks/usePressScale';
 import {useAppNavigation} from '../../navigation/NavigationContext';
 import {Colors} from '../../theme/colors';
 import type {Place} from '../../types';
@@ -19,6 +28,7 @@ const INITIAL_REGION = {
 export function MapScreen() {
   const {openPlaceDetail} = useAppNavigation();
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const {scale, onPressIn, onPressOut} = usePressScale(0.94);
 
   return (
     <View style={styles.MapScreenContainer}>
@@ -49,7 +59,11 @@ export function MapScreen() {
 
         {selectedPlace !== null && (
           <View style={styles.MapScreenCardWrap} pointerEvents="box-none">
-            <View style={styles.MapScreenCard}>
+            <FadeSlideIn
+              key={selectedPlace.id}
+              style={styles.MapScreenCard}
+              duration={300}
+              distance={24}>
               <View style={styles.MapScreenCardImageWrap}>
                 <Image
                   source={selectedPlace.image}
@@ -74,17 +88,24 @@ export function MapScreen() {
                   {selectedPlace.shortDescription}
                 </Text>
                 <TouchableOpacity
-                  style={styles.MapScreenCardOpenBtn}
                   activeOpacity={0.8}
+                  onPressIn={onPressIn}
+                  onPressOut={onPressOut}
                   onPress={() => {
                     const place = selectedPlace;
                     setSelectedPlace(null);
                     openPlaceDetail(place);
                   }}>
-                  <Text style={styles.MapScreenCardOpenBtnText}>Open</Text>
+                  <Animated.View
+                    style={[
+                      styles.MapScreenCardOpenBtn,
+                      {transform: [{scale}]},
+                    ]}>
+                    <Text style={styles.MapScreenCardOpenBtnText}>Open</Text>
+                  </Animated.View>
                 </TouchableOpacity>
               </View>
-            </View>
+            </FadeSlideIn>
           </View>
         )}
       </View>

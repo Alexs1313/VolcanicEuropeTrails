@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import {FadeSlideIn} from '../../components/FadeSlideIn';
 import {NoteCard} from '../../components/NoteCard';
 import {TRAVEL_NOTES} from '../../data/notes';
 import {useAppNavigation} from '../../navigation/NavigationContext';
@@ -18,12 +19,10 @@ export function NotesScreen() {
         <View style={styles.NotesScreenDivider} />
 
         <View style={styles.NotesScreenCards}>
-          {TRAVEL_NOTES.map(note => (
-            <NoteCard
-              key={note.id}
-              note={note}
-              onOpen={() => openNoteDetail(note)}
-            />
+          {TRAVEL_NOTES.map((note, index) => (
+            <FadeSlideIn key={note.id} delay={index * 60} duration={340}>
+              <NoteCard note={note} onOpen={() => openNoteDetail(note)} />
+            </FadeSlideIn>
           ))}
         </View>
       </ScrollView>

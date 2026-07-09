@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import {FadeSlideIn} from '../../components/FadeSlideIn';
 import {TipCard} from '../../components/TipCard';
 import {SAFETY_TIPS} from '../../data/tips';
 
@@ -16,8 +17,10 @@ export function TipsScreen() {
         <View style={styles.TipsScreenDivider} />
 
         <View style={styles.TipsScreenCards}>
-          {SAFETY_TIPS.map(tip => (
-            <TipCard key={tip.id} tip={tip} />
+          {SAFETY_TIPS.map((tip, index) => (
+            <FadeSlideIn key={tip.id} delay={index * 60} duration={340}>
+              <TipCard tip={tip} />
+            </FadeSlideIn>
           ))}
         </View>
       </ScrollView>

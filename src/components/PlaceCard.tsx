@@ -1,8 +1,16 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {ICON_SAVE, ICON_SAVED} from '../assets/trailImages';
+import {usePressScale} from '../hooks/usePressScale';
 import {Colors} from '../theme/colors';
 import type {Place} from '../types';
 
@@ -14,45 +22,51 @@ interface Props {
 }
 
 export function PlaceCard({place, isSaved, onPress, onToggleSave}: Props) {
+  const {scale, onPressIn, onPressOut} = usePressScale(0.97);
+
   return (
-    <TouchableOpacity
-      style={styles.PlaceCardContainer}
-      onPress={onPress}
-      activeOpacity={0.8}>
-      <View style={styles.PlaceCardImageWrap}>
-        <Image
-          source={place.image}
-          style={styles.PlaceCardImage}
-          resizeMode="cover"
-        />
-        <LinearGradient
-          colors={['transparent', Colors.cardBg]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          style={styles.PlaceCardImageGrad}
-        />
-      </View>
-
-      <View style={styles.PlaceCardContent}>
-        <Text style={styles.PlaceCardTitle} numberOfLines={1}>
-          {place.title}
-        </Text>
-        <Text style={styles.PlaceCardCountry}>Country: {place.country}</Text>
-        <Text style={styles.PlaceCardDesc} numberOfLines={3}>
-          {place.shortDescription}
-        </Text>
-      </View>
-
+    <Animated.View style={{transform: [{scale}]}}>
       <TouchableOpacity
-        style={styles.PlaceCardBookmark}
-        onPress={onToggleSave}
-        hitSlop={{top: 8, right: 8, bottom: 8, left: 8}}>
-        <Image
-          source={isSaved ? ICON_SAVED : ICON_SAVE}
-          style={styles.PlaceCardBookmarkIcon}
-        />
+        style={styles.PlaceCardContainer}
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        activeOpacity={0.8}>
+        <View style={styles.PlaceCardImageWrap}>
+          <Image
+            source={place.image}
+            style={styles.PlaceCardImage}
+            resizeMode="cover"
+          />
+          <LinearGradient
+            colors={['transparent', Colors.cardBg]}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            style={styles.PlaceCardImageGrad}
+          />
+        </View>
+
+        <View style={styles.PlaceCardContent}>
+          <Text style={styles.PlaceCardTitle} numberOfLines={1}>
+            {place.title}
+          </Text>
+          <Text style={styles.PlaceCardCountry}>Country: {place.country}</Text>
+          <Text style={styles.PlaceCardDesc} numberOfLines={3}>
+            {place.shortDescription}
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.PlaceCardBookmark}
+          onPress={onToggleSave}
+          hitSlop={{top: 8, right: 8, bottom: 8, left: 8}}>
+          <Image
+            source={isSaved ? ICON_SAVED : ICON_SAVE}
+            style={styles.PlaceCardBookmarkIcon}
+          />
+        </TouchableOpacity>
       </TouchableOpacity>
-    </TouchableOpacity>
+    </Animated.View>
   );
 }
 

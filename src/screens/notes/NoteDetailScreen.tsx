@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Animated,
   Image,
   ScrollView,
   Share,
@@ -11,11 +12,14 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 import {ICON_SHARE} from '../../assets/trailImages';
+import {usePressScale} from '../../hooks/usePressScale';
 import {useAppNavigation} from '../../navigation/NavigationContext';
 import {Colors} from '../../theme/colors';
 
 export function NoteDetailScreen() {
   const {overlay, goBack} = useAppNavigation();
+  const backScale = usePressScale(0.88);
+  const shareScale = usePressScale(0.88);
 
   if (overlay.type !== 'NoteDetail') {
     return null;
@@ -39,13 +43,24 @@ export function NoteDetailScreen() {
         showsVerticalScrollIndicator={false}>
         <TouchableOpacity
           style={styles.NoteDetailScreenBackBtn}
-          onPress={goBack}>
-          <Text style={styles.NoteDetailScreenBtnText}>←</Text>
+          onPress={goBack}
+          onPressIn={backScale.onPressIn}
+          onPressOut={backScale.onPressOut}>
+          <Animated.View style={{transform: [{scale: backScale.scale}]}}>
+            <Text style={styles.NoteDetailScreenBtnText}>←</Text>
+          </Animated.View>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.NoteDetailScreenShareBtn}
-          onPress={handleShare}>
-          <Image source={ICON_SHARE} style={styles.NoteDetailScreenShareIcon} />
+          onPress={handleShare}
+          onPressIn={shareScale.onPressIn}
+          onPressOut={shareScale.onPressOut}>
+          <Animated.View style={{transform: [{scale: shareScale.scale}]}}>
+            <Image
+              source={ICON_SHARE}
+              style={styles.NoteDetailScreenShareIcon}
+            />
+          </Animated.View>
         </TouchableOpacity>
 
         <View style={styles.NoteDetailScreenHero}>

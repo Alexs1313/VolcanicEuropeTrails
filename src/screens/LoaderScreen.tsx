@@ -11,6 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 import {LOADER_ICON} from '../assets/trailImages';
+import {FadeSlideIn} from '../components/FadeSlideIn';
 import {Storage} from '../storage/storage';
 
 import {Colors} from '../theme/colors';
@@ -106,22 +107,32 @@ export function LoaderScreen({onFinish}: Props) {
       <ScrollView
         contentContainerStyle={styles.LoaderScreenScroll}
         showsVerticalScrollIndicator={false}>
-        <Image
-          source={LOADER_ICON}
-          style={styles.LoaderScreenIcon}
-          resizeMode="cover"
-        />
-        <View style={styles.LoaderScreenTextBlock}>
+        <FadeSlideIn duration={500} distance={16}>
+          <Image
+            source={LOADER_ICON}
+            style={styles.LoaderScreenIcon}
+            resizeMode="cover"
+          />
+        </FadeSlideIn>
+        <FadeSlideIn
+          duration={500}
+          delay={150}
+          distance={16}
+          style={styles.LoaderScreenTextBlock}>
           <Text style={styles.LoaderScreenTitle}>Preparing the Trail</Text>
           <View style={styles.LoaderScreenTitleGap} />
           <Text style={styles.LoaderScreenSubtitle}>
             Loading mountain trails, scenic views, and travel notes for your
             next European escape.
           </Text>
-        </View>
-        <View style={styles.LoaderScreenSpinner}>
+        </FadeSlideIn>
+        <FadeSlideIn
+          duration={500}
+          delay={300}
+          distance={16}
+          style={styles.LoaderScreenSpinner}>
           <Spinner12 />
-        </View>
+        </FadeSlideIn>
       </ScrollView>
     </LinearGradient>
   );
