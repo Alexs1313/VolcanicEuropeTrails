@@ -18,6 +18,7 @@ import {SavedScreen} from '../screens/saved/SavedScreen';
 import {NotesScreen} from '../screens/notes/NotesScreen';
 import {NoteDetailScreen} from '../screens/notes/NoteDetailScreen';
 import {TipsScreen} from '../screens/tips/TipsScreen';
+import {QuizScreen} from '../screens/quiz/QuizScreen';
 
 //  context and types
 import {Colors} from '../theme/colors';
@@ -30,6 +31,7 @@ const TABS: {name: AppTab; label: string; icon: string}[] = [
   {name: 'SavedTab', label: 'Saved', icon: '🔖'},
   {name: 'NotesTab', label: 'Notes', icon: '📖'},
   {name: 'TipsTab', label: 'Tips', icon: '⚠️'},
+  {name: 'QuizTab', label: 'Quiz', icon: '🧠'},
 ];
 
 function TabContent() {
@@ -45,6 +47,8 @@ function TabContent() {
       return <NotesScreen />;
     case 'TipsTab':
       return <TipsScreen />;
+    case 'QuizTab':
+      return <QuizScreen />;
     default:
       return <PlacesScreen />;
   }

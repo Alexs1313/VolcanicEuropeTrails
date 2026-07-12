@@ -31,3 +31,17 @@ export interface SafetyTip {
   title: string;
   fullText: string;
 }
+
+export interface QuizQuestion {
+  id: string;
+  text: string;
+  options: string[];
+  correctIndex: number;
+}
+
+export interface QuizLevel {
+  id: string;
+  title: string;
+  description: string;
+  questions: QuizQuestion[];
+}

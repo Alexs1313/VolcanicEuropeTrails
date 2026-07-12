@@ -7,7 +7,8 @@ export type AppTab =
   | 'MapTab'
   | 'SavedTab'
   | 'NotesTab'
-  | 'TipsTab';
+  | 'TipsTab'
+  | 'QuizTab';
 
 export type AppOverlay =
   | {type: 'none'}

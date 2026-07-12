@@ -8,45 +8,55 @@ import {
   View,
 } from 'react-native';
 
-import {ONBOARDING_IMAGES} from '../assets/trailImages';
+import {ONBOARDING_IMAGES, QUIZ_INTRO_IMAGE} from '../assets/trailImages';
 import {Storage} from '../storage/storage';
 import {AnimatedScreen} from '../components/AnimatedScreen';
 import {Colors} from '../theme/colors';
 
-const IMAGE_LAYOUTS = [
-  {width: 320, height: 303},
-  {width: 184, height: 334},
-  {width: 315, height: 335},
-  {width: 332, height: 276},
-  {width: 350, height: 288},
-] as const;
-
 const PAGES = [
   {
+    image: ONBOARDING_IMAGES[0],
+    layout: {width: 320, height: 303},
     title: 'Discover Fiery Europe',
     subtitle:
       'Explore mountain peaks, volcanic trails, and dramatic natural landmarks across Europe.',
     button: 'Start Exploring',
   },
   {
+    image: ONBOARDING_IMAGES[1],
+    layout: {width: 184, height: 334},
     title: 'Follow Scenic Trails',
     subtitle:
       'Find trails through cliffs, craters, ridges, lakes, and panoramic mountain viewpoints.',
     button: 'View Trails',
   },
   {
+    image: ONBOARDING_IMAGES[2],
+    layout: {width: 315, height: 335},
     title: 'Explore Fiery Spots',
     subtitle:
       'Open detailed cards with descriptions, coordinates, and useful travel information.',
     button: 'Open Places',
   },
   {
+    image: ONBOARDING_IMAGES[3],
+    layout: {width: 332, height: 276},
     title: 'Save Future Trips',
     subtitle:
       'Keep your favorite peaks and volcanic landscapes ready for your next journey.',
     button: 'Save Places',
   },
   {
+    image: QUIZ_INTRO_IMAGE,
+    layout: {width: 280, height: 248},
+    title: 'Test the Volcanic Trail',
+    subtitle:
+      'Answer quiz questions about Europe’s volcanoes, mountain peaks, crater lands, scenic routes, maps, and travel safety.',
+    button: 'Start Quiz',
+  },
+  {
+    image: ONBOARDING_IMAGES[4],
+    layout: {width: 350, height: 288},
     title: 'Travel Prepared',
     subtitle:
       'Read safety notes and simple tips before visiting mountain and volcanic areas.',
@@ -61,7 +71,6 @@ interface Props {
 export function OnboardingScreen({onFinish}: Props) {
   const [page, setPage] = useState(0);
   const current = PAGES[page];
-  const layout = IMAGE_LAYOUTS[page] ?? IMAGE_LAYOUTS[0];
 
   const complete = async () => {
     await Storage.setOnboardingDone();
@@ -93,8 +102,8 @@ export function OnboardingScreen({onFinish}: Props) {
       <AnimatedScreen key={page} distance={24}>
         <View style={styles.OnboardingScreenImageWrap}>
           <Image
-            source={ONBOARDING_IMAGES[page]}
-            style={{width: layout.width, height: layout.height}}
+            source={current.image}
+            style={{width: current.layout.width, height: current.layout.height}}
             resizeMode="contain"
           />
         </View>

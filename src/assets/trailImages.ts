@@ -48,3 +48,7 @@ export const ICON_SAVE = require('./europe-trails-save.png');
 export const ICON_SAVED = require('./europe-trails-saved.png');
 export const ICON_SHARE = require('./europe-trails-share.png');
 export const MAP_PIN = require('./europe-trails-pin.png');
+
+export const QUIZ_INTRO_IMAGE = require('./quiz_intro.png');
+export const QUIZ_COMPLETE_IMAGE = require('./complete.png');
+export const QUIZ_OVER_IMAGE = require('./over.png');
